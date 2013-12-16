@@ -35,7 +35,7 @@ class TradeChain(object):
         that the chain of trades starts and ends in the same currency.
 
         """
-        if self.profit == 0:
+        if self.profit < 0.01:
             return 0
 
         return float(((Decimal(str(self.profit)) / Decimal(
