@@ -24,6 +24,8 @@ class ArbitrerCLI:
             logging.info("Looking for profits along %s possible paths." % (
                 len(self.arbitrer.marketchains)
             ))
+            #for chain in self.arbitrer.marketchains:
+            #    logging.debug(chain)
             self.arbitrer.loop()
 
         if "replay-history" in args.command:
@@ -48,7 +50,10 @@ class ArbitrerCLI:
         self.arbitrer = Arbitrer()
         if args.observers:
             self.arbitrer.init_observers(args.observers.split(","))
-        if args.markets:
+        if args.markets and "get-balance" not in args.command:
+            # TODO: this is broken, as init_markets request a dict now
+            # get-balance needs -m, therefore we skip init_markets
+            # as a quick workaround
             self.arbitrer.init_markets(args.markets.split(","))
 
 

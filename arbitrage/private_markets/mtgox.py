@@ -135,9 +135,7 @@ class PrivateMtGox(Market):
         params = [("nonce", self._create_nonce())]
         response = self._send_request(self.info_url, params)
         if response and "result" in response and response["result"] == "success":
-            for currency, wallet in response["return"]["Wallets"]:
-                self.balances[currency] = self._from_int_amount(int(
-                    wallet["Balance"]["value_int"]
-                ))
+            for currency, wallet in response["return"]["Wallets"].items():
+                self.balances[currency] = float(wallet["Balance"]["value"])
             return 1
         return None
